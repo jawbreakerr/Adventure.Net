@@ -1,0 +1,162 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{AE516210-94E7-49F0-8C10-7FECAD49EAAF}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ColossalCave</RootNamespace>
+    <AssemblyName>Advent</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AboveGround.cs" />
+    <Compile Include="MyObjects\BlackRod.cs" />
+    <Compile Include="MyObjects\Bottle.cs" />
+    <Compile Include="MyObjects\BrassLantern.cs" />
+    <Compile Include="MyObjects\Cobbles.cs" />
+    <Compile Include="MyObjects\Debris.cs" />
+    <Compile Include="MyObjects\Forest.cs" />
+    <Compile Include="MyObjects\FreshBatteries.cs" />
+    <Compile Include="MyObjects\LargeGoldNugget.cs" />
+    <Compile Include="MyObjects\LittleBird.cs" />
+    <Compile Include="MyObjects\MingVase.cs" />
+    <Compile Include="MyObjects\Mist.cs" />
+    <Compile Include="MyObjects\Note.cs" />
+    <Compile Include="MyObjects\Oil.cs" />
+    <Compile Include="MyObjects\OldBatteries.cs" />
+    <Compile Include="MyObjects\PitCrack.cs" />
+    <Compile Include="MyObjects\Scenic.cs" />
+    <Compile Include="MyObjects\Shards.cs" />
+    <Compile Include="MyObjects\SmallPit.cs" />
+    <Compile Include="MyObjects\Streambed.cs" />
+    <Compile Include="MyObjects\VelvetPillow.cs" />
+    <Compile Include="MyObjects\VendingMachine.cs" />
+    <Compile Include="MyObjects\WickerCage.cs" />
+    <Compile Include="MyRooms\BirdChamber.cs" />
+    <Compile Include="MyRooms\Grate.cs" />
+    <Compile Include="MyObjects\Hill.cs" />
+    <Compile Include="MyObjects\OilInTheBottle.cs" />
+    <Compile Include="MyObjects\OtherSideOfHill.cs" />
+    <Compile Include="MyObjects\Road.cs" />
+    <Compile Include="MyObjects\SetOfKeys.cs" />
+    <Compile Include="MyObjects\SewerPipes.cs" />
+    <Compile Include="MyObjects\Spring.cs" />
+    <Compile Include="MyObjects\Stream.cs" />
+    <Compile Include="MyObjects\TastyFood.cs" />
+    <Compile Include="MyObjects\TwentyFootDepression.cs" />
+    <Compile Include="MyObjects\TwoInchSlit.cs" />
+    <Compile Include="MyObjects\WaterInTheBottle.cs" />
+    <Compile Include="MyObjects\WellHouse.cs" />
+    <Compile Include="MyRooms\SlitInStreambed.cs" />
+    <Compile Include="MyRooms\BelowTheGrate.cs" />
+    <Compile Include="MyRooms\AwkwardSlopingEWCanyon.cs" />
+    <Compile Include="MyRooms\CobbleCrawl.cs" />
+    <Compile Include="MyRooms\TopOfSmallPit.cs" />
+    <Compile Include="MyRooms\Valley.cs" />
+    <Compile Include="MyRooms\DebrisRoom.cs" />
+    <Compile Include="MyRooms\Forest1.cs" />
+    <Compile Include="MyRooms\Forest2.cs" />
+    <Compile Include="MyRooms\InsideBuilding.cs" />
+    <Compile Include="MyRooms\OutsideGrate.cs" />
+    <Compile Include="MyVerbs\Xyzzy.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ColossalCave.cs" />
+    <Compile Include="AdventRoom.cs" />
+    <Compile Include="MyRooms\EndOfRoad.cs" />
+    <Compile Include="MyRooms\HillInRoad.cs" />
+    <Compile Include="Treasure.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Adventure.Net\Adventure.Net.csproj">
+      <Project>{80084E30-97AF-4AA5-89E5-5F76C2739E77}</Project>
+      <Name>Adventure.Net</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="advent.inf" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
