@@ -1,8 +1,8 @@
 using Adventure.Net;
 using Adventure.Net.Verbs;
-using Advent.MyObjects;
+using ColossalCave.MyObjects;
 
-namespace Advent.MyRooms
+namespace ColossalCave.MyRooms
 {
     public class Grate : Door
     {

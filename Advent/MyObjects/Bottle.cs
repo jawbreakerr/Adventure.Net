@@ -1,7 +1,7 @@
 ﻿using Adventure.Net;
 using Adventure.Net.Verbs;
 
-namespace Advent.MyObjects
+namespace ColossalCave.MyObjects
 {
     public class Bottle : Container
     {

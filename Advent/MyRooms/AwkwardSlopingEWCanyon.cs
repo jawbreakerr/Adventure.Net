@@ -1,4 +1,4 @@
-﻿namespace Advent.MyRooms
+﻿namespace ColossalCave.MyRooms
 {
     public class AwkwardSlopingEWCanyon : AdventRoom
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using Adventure.Net;
 
-namespace Advent
+namespace ColossalCave
 {
     /// <summary>
     /// Base class for Room (as far as *this* game is concerned)

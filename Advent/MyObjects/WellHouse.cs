@@ -1,7 +1,7 @@
-﻿using Advent.MyRooms;
+﻿using ColossalCave.MyRooms;
 using Adventure.Net.Verbs;
 
-namespace Advent.MyObjects
+namespace ColossalCave.MyObjects
 {
     public class WellHouse : Scenic
     {

@@ -1,7 +1,7 @@
 ﻿
-using Advent.MyRooms;
+using ColossalCave.MyRooms;
 
-namespace Advent.MyObjects
+namespace ColossalCave.MyObjects
 {
     public class Cobbles : Scenic
     {

@@ -1,11 +1,11 @@
-using Advent.MyRooms;
+using ColossalCave.MyRooms;
 using Adventure.Net;
 
-namespace Advent
+namespace ColossalCave
 {
-    public class ColossalCave : StoryBase
+    public class ColossalCaveStory : StoryBase
     {
-        public ColossalCave()
+        public ColossalCaveStory()
         {
             Story = "ADVENTURE";
             Headline = "By Will Crowther (1976) and Don Woods (1977)\n" +

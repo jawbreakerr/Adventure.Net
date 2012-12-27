@@ -1,6 +1,6 @@
 ﻿using System.IO;
-using Advent.MyObjects;
-using Advent.MyRooms;
+using ColossalCave.MyObjects;
+using ColossalCave.MyRooms;
 using Adventure.Net;
 using NUnit.Framework;
 

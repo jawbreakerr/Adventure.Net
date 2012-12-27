@@ -1,6 +1,6 @@
 ﻿using Adventure.Net;
 
-namespace Advent.MyObjects
+namespace ColossalCave.MyObjects
 {
     public class VelvetPillow : Object
     {

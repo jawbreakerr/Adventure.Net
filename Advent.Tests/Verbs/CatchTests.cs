@@ -1,4 +1,4 @@
-﻿using Advent.MyRooms;
+﻿using ColossalCave.MyRooms;
 using Adventure.Net;
 using NUnit.Framework;
 using Object = Adventure.Net.Object;

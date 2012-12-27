@@ -1,10 +1,11 @@
 ﻿using System.IO;
 using System.Text;
-using Advent.MyObjects;
+using ColossalCave;
+using ColossalCave.MyObjects;
 using Adventure.Net;
 using Adventure.Net.Verbs;
 using NUnit.Framework;
-using Advent.MyRooms;
+using ColossalCave.MyRooms;
 
 namespace Advent.Tests
 {
@@ -19,7 +20,7 @@ namespace Advent.Tests
         {
             parser = new Parser();
             // initialize story and put player in "Inside Building"
-            Context.Story = new ColossalCave();
+            Context.Story = new ColossalCaveStory();
             Context.Output = new Output(new StringWriter(new StringBuilder()));
             Context.CommandPrompt = new CommandPrompt(new StringWriter(), new StringReader(""));
             Context.Story.Initialize();

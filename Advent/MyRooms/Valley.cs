@@ -1,7 +1,7 @@
 ﻿
-using Advent.MyObjects;
+using ColossalCave.MyObjects;
 
-namespace Advent.MyRooms
+namespace ColossalCave.MyRooms
 {
     public class Valley : AboveGround
     {

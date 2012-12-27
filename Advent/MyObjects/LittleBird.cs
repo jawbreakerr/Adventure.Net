@@ -3,7 +3,7 @@ using Adventure.Net;
 using Adventure.Net.Verbs;
 using Object = Adventure.Net.Object;
 
-namespace Advent.MyObjects
+namespace ColossalCave.MyObjects
 {
     public class LittleBird : Object
     {

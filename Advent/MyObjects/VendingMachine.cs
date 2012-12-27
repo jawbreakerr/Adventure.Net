@@ -1,6 +1,6 @@
 ﻿using Adventure.Net.Verbs;
 
-namespace Advent.MyObjects
+namespace ColossalCave.MyObjects
 {
     public class VendingMachine : Scenic
     {

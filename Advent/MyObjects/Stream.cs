@@ -1,8 +1,8 @@
-﻿using Advent.MyRooms;
+﻿using ColossalCave.MyRooms;
 using Adventure.Net;
 using Adventure.Net.Verbs;
 
-namespace Advent.MyObjects
+namespace ColossalCave.MyObjects
 {
     public class Stream : Scenic
     {

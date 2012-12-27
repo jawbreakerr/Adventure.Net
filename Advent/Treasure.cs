@@ -1,7 +1,7 @@
 ﻿using System;
 using Object = Adventure.Net.Object;
 
-namespace Advent
+namespace ColossalCave
 {
     public abstract class Treasure : Object
     {

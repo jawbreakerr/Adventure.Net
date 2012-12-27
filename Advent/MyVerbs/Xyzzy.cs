@@ -1,6 +1,6 @@
 ﻿using Adventure.Net;
 
-namespace Advent.MyVerbs
+namespace ColossalCave.MyVerbs
 {
     public class Xyzzy : Verb
     {

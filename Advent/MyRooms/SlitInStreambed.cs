@@ -1,7 +1,7 @@
-﻿using Advent.MyObjects;
+﻿using ColossalCave.MyObjects;
 using Adventure.Net.Verbs;
 
-namespace Advent.MyRooms
+namespace ColossalCave.MyRooms
 {
     public class SlitInStreambed : AboveGround
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Advent.MyObjects
+namespace ColossalCave.MyObjects
 {
     public class Mist : Scenic
     {

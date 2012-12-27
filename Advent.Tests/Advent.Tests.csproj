@@ -108,9 +108,9 @@
       <Project>{80084E30-97AF-4AA5-89E5-5F76C2739E77}</Project>
       <Name>Adventure.Net</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Advent\Advent.csproj">
+    <ProjectReference Include="..\Advent\ColossalCave.csproj">
       <Project>{AE516210-94E7-49F0-8C10-7FECAD49EAAF}</Project>
-      <Name>Advent</Name>
+      <Name>ColossalCave</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

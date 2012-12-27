@@ -1,9 +1,9 @@
-﻿using Advent.MyObjects;
-using Advent.MyVerbs;
+﻿using ColossalCave.MyObjects;
+using ColossalCave.MyVerbs;
 using Adventure.Net;
 using Adventure.Net.Verbs;
 
-namespace Advent.MyRooms
+namespace ColossalCave.MyRooms
 {
     public class InsideBuilding : AboveGround
     {

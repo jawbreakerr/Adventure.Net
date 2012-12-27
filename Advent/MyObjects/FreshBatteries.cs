@@ -1,7 +1,7 @@
 ﻿using Adventure.Net.Verbs;
 using Adventure.Net;
 
-namespace Advent.MyObjects
+namespace ColossalCave.MyObjects
 {
     public class FreshBatteries : Object
     {

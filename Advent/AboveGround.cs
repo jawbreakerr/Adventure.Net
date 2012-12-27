@@ -1,4 +1,4 @@
-﻿namespace Advent
+﻿namespace ColossalCave
 {
     public abstract class AboveGround : AdventRoom
     {

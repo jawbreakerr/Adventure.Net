@@ -80,16 +80,14 @@ namespace Adventure.Net
             {
                 if (obj.HasLight)
                     return true;
-                Container container = obj as Container;
-                if (container != null && (container.IsOpen || container.IsTransparent))
+                var container = obj as Container;
+                if (container == null || (!container.IsOpen && !container.IsTransparent)) 
+                    continue;
+                foreach(var containedObj in container.Contents)
                 {
-                    foreach(var containedObj in container.Contents)
-                    {
-                        if (containedObj.HasLight)
-                            return true;
-                    }
+                    if (containedObj.HasLight)
+                        return true;
                 }
-                
             }
 
             return false;
