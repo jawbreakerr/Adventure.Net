@@ -10,7 +10,7 @@ namespace Adventure.Net.Verbs
         {
             Name = "unlock";
             Grammars.Add("<noun> with <held>", UnlockObject);
-            //Grammars.Add("<noun>", UnlockObject);
+            Grammars.Add("<noun>", UnlockObject);
         }
 
         private bool UnlockObject()
@@ -21,10 +21,8 @@ namespace Adventure.Net.Verbs
                 Print("It's unlocked at the moment.");
             else if (Object is Door) // need to refactor so this works for all lockable things
             {
-                Door door = Object as Door;
-
+                var door = Object as Door;
                 UnlockDoor(door);
-
             }
 
             return true;
@@ -62,29 +60,31 @@ namespace Adventure.Net.Verbs
         // currently remember the last command
         private void ObjectNotSpecified()
         {
-            //Print("What do you want to unlock the {0} with?", Object.Name);
-                //string input = Context.CommandPrompt.GetInput();
-                //if (string.IsNullOrEmpty(input))
-                //{
-                //    Print(L.DoNotUnderstand);
-                //    return;
-                //}
+            var L = new Library();
 
-            //InputTokenizer tokenizer = new InputTokenizer();
-            //IList<string> tokens = tokenizer.Tokenize(input);
+            // do not use Print, go directly to output
+            Context.Output.Print("What do you want to unlock the {0} with?", Object.Name);
+            
+            string input = Context.CommandPrompt.GetInput();
+            if (string.IsNullOrEmpty(input))
+            {
+                Print(L.DoNotUnderstand);
+                return;
+            }
 
-            //// player is answering the question (no verb specified) vs. re-typing
-            //// a complete sentence
-            //if (!tokens.StartsWithVerb())
-            //{
-            //    // this is very simplistic right now
-            //    input = "unlock " + Object.Synonyms[0] + " with " + String.Join(" ", tokens.ToArray());
-            //}
+            var tokenizer = new InputTokenizer();
+            var tokens = tokenizer.Tokenize(input);
 
-            //// player re-typed input with verb
-            //var parser = new Parser3();
-            //parser.Parse(input);
-           
+            // player is answering the question (no verb specified) vs. re-typing
+            // a complete sentence
+            if (!tokens.StartsWithVerb())
+            {
+                // this is very simplistic right now
+                input = "unlock " + Object.Synonyms[0] + " with " + String.Join(" ", tokens.ToArray());
+            }
+
+            Context.Parser.Parse(input);
+
         }
     }
 }

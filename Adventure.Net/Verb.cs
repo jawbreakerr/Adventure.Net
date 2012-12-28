@@ -7,10 +7,14 @@ namespace Adventure.Net
     public abstract class Verb : ContextObject
     {
         public string Name { get; protected set; }
+        
         public Synonyms Synonyms = new Synonyms();
         
         public Grammars Grammars = new Grammars();
-        
+
+        public bool ImplicitTake { get; set; }
+
+
         protected bool RedirectTo<T>(string format) where T : Verb, new()
         {
             bool result = false;

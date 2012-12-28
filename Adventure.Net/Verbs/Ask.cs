@@ -13,24 +13,23 @@
 
         private bool OnAsk()
         {
-            if (!Object.IsAnimate)
-            {
-                Print("You can only do that to something animate.");
-                return true;
-            }
-
-            return false;
+            return Default();
         }
 
-        private bool OnAskFor()
+        private bool Default()
         {
             if (!Object.IsAnimate)
             {
                 Print("You can only do that to something animate.");
                 return true;
             }
+            Print("There was no reply.");
+            return true;
+        }
 
-            return false;
+        private bool OnAskFor()
+        {
+            return Default();
         }
 
     }

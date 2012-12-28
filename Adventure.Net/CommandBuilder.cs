@@ -19,44 +19,46 @@ namespace Adventure.Net
 
             if (inputResult.Objects.Count == 0)
             {
-                if (inputResult.IsSingleAction)
+                // Single Action = "North"
+                // IsAll = some command where all was specified (e.g. drop all)
+                if (inputResult.IsSingleAction || inputResult.IsAll)
                 {
                     result.Add(GetCommand(null));
                 }
-                else
+                else if (!inputResult.IsAll)
                 {
                     throw new Exception("Implement objectnotspecifed!!!!");
                 }
             }
-            else if (inputResult.Objects.Count == 1)
-            {
-                var obj = inputResult.Objects[0];
+            //else if (inputResult.Objects.Count == 1)
+            //{
+            //    var obj = inputResult.Objects[0];
 
-                if (inputResult.ObjectsMustBeHeld && !Inventory.Contains(obj))
-                {
-                    bool canTakeObject = obj.AtLocation && obj.InScope && !obj.IsScenery && !obj.IsStatic && !obj.IsAnimate;
-                    if (canTakeObject)
-                    {
-                        var takeCommand = GenerateTakeFirstCommand(obj);
-                        result.Add(takeCommand);
-                    }
-                    else
-                    {
-                        var command = GetCommand(obj);
-                        command.Action = () =>
-                        {
-                            Context.Parser.Print("You aren't holding that.");
-                            return true;
-                        };
+            //    if (inputResult.ObjectsMustBeHeld && !Inventory.Contains(obj))
+            //    {
+            //        bool canTakeObject = obj.AtLocation && obj.InScope && !obj.IsScenery && !obj.IsStatic && !obj.IsAnimate;
+            //        if (canTakeObject && inputResult.Verb.ImplicitTake)
+            //        {
+            //            var takeCommand = GenerateTakeFirstCommand(obj);
+            //            result.Add(takeCommand);
+            //        }
+            //        else
+            //        {
+            //            var command = GetCommand(obj);
+            //            command.Action = () =>
+            //            {
+            //                Context.Parser.Print("You aren't holding that.");
+            //                return true;
+            //            };
 
-                        result.Add(command);
-                    }
-                }
-                else
-                {
-                    result.Add(GetCommand(obj));
-                }
-            }
+            //            result.Add(command);
+            //        }
+            //    }
+            //    else
+            //    {
+            //        result.Add(GetCommand(obj));
+            //    }
+            //}
             else
             {
                 foreach (var obj in inputResult.Objects)
@@ -79,23 +81,23 @@ namespace Adventure.Net
             };
         }
 
-        private static Command GenerateTakeFirstCommand(Object obj)
-        {
-            var result = new Command
-            {
-                Verb = new Take(),
-                Object = obj,
-                Action = () =>
-                {
-                    var take = new Take {SupressMessages = true};
-                    take.TakeObject(obj);
-                    Context.Parser.Print(String.Format("(first taking the {0})", obj.Name));
-                    return false;
-                }
-            };
+        //private static Command GenerateTakeFirstCommand(Object obj)
+        //{
+        //    var result = new Command
+        //    {
+        //        Verb = new Take(),
+        //        Object = obj,
+        //        Action = () =>
+        //        {
+        //            var take = new Take {SupressMessages = true};
+        //            take.TakeObject(obj);
+        //            Context.Parser.Print(String.Format("(first taking the {0})", obj.Name));
+        //            return false;
+        //        }
+        //    };
 
-            return result;
-        }
+        //    return result;
+        //}
     }
    
 }

@@ -26,7 +26,7 @@ namespace ColossalCave.MyObjects
 
             Before<Take>(() =>
                 {
-                    Bottle bottle = Objects.Get<Bottle>();
+                    var bottle = Objects.Get<Bottle>();
                     if (!bottle.InInventory)
                     {
                         Print("You have nothing in which to carry the water.");

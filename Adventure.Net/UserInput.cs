@@ -9,16 +9,15 @@ namespace Adventure.Net
     {
         private Library L = new Library();
 
-        private InputResult result;
-        private Grammar grammar;
 
         public InputResult Parse(string input)
         {
-            grammar = null;
-            result = new InputResult();
+            var result = new InputResult();
 
             var tokenizer = new InputTokenizer();
             var tokens = tokenizer.Tokenize(input);
+
+            Action removeVerbToken = () => tokens.RemoveAt(0);
 
             if (tokens.Count == 0)
             {
@@ -33,7 +32,7 @@ namespace Adventure.Net
             // there can be more than one match for verbs like "switch"
             // which has one class that handles "switch on" and another 
             // class that handles "switch off"
-            IList<Verb> possibleVerbs = VerbList.GetVerbsByName(tokens[0]);
+            var possibleVerbs = VerbList.GetVerbsByName(tokens[0]);
 
             if (possibleVerbs.Count == 0)
             {
@@ -41,14 +40,19 @@ namespace Adventure.Net
                 result.Action = ErrorAction(L.VerbNotRecognized);
                 return result;
             }
+            
+            if (possibleVerbs.Count == 1)
+            {
+                result.Verb = possibleVerbs.First();
+            }
+            //else { NOT sure what to do about multiple possible verbs here}
+
 
             // remove verb token
-            tokens.RemoveAt(0);
+            removeVerbToken();
 
             var grammarTokens = new List<string>();
             bool hasPreposition = false;
-            bool isException = false;
-            bool isPartial = false;
 
             foreach (string token in tokens)
             {
@@ -85,17 +89,18 @@ namespace Adventure.Net
                     }
                     else if (token == K.ALL)
                     {
-                        ((List<Object>)result.Objects).AddRange(L.ObjectsInScope());
+                        result.Objects.AddRange(L.ObjectsInScope());
                         grammarTokens.Add(token);
                         result.IsAll = true;
                     }
                     else if (token == K.EXCEPT)
                     {
-                        isException = true;
+                       // isException = true;
+                        result.IsExcept = true;
                     }
                     else
                     {
-                        if (isPartial)
+                        if (result.IsPartial)
                         {
                             string partial = String.Format("I only understood you as far as wanting to {0} the {1}.", possibleVerbs[0].Name, result.Objects[0].Name);
                             result.Action = ErrorAction(partial);
@@ -109,7 +114,7 @@ namespace Adventure.Net
                 else
                 {
                     // need to implement "Which do you mean, the red cape or the black cape?" type behavior here
-                    Object obj = null;
+                    Object obj;
                     var ofInterest = objects.Where(x => x.InScope).ToList();
                     if (ofInterest.Count > 1)
                     {
@@ -134,7 +139,7 @@ namespace Adventure.Net
                         grammarTokens.Add(K.INDIRECT_OBJECT_TOKEN);
                         result.IndirectObject = obj;
                     }
-                    else if (isException)
+                    else if (result.IsExcept)
                     {
                         result.Objects.Remove(obj);
                         result.Exceptions.Add(obj);
@@ -145,7 +150,7 @@ namespace Adventure.Net
                             grammarTokens.Add(K.OBJECT_TOKEN);
                         if (!result.Objects.Contains(obj))
                             result.Objects.Add(obj);
-                        isPartial = true;
+                        result.IsPartial = true;
                     }
                 }
 
@@ -157,42 +162,52 @@ namespace Adventure.Net
             var grammarBuilder = new GrammarBuilder(grammarTokens);
             var grammars = grammarBuilder.Build();
 
-            FindVerb(possibleVerbs, grammars);
+            FindVerb(result, possibleVerbs, grammars);
 
-            if (grammar == null)
+            // Here we need to handle incompletes
+
+            if (result.Grammar == null)
             {
-                // Create action for "What do you want to <<verb>> the <<noun>> with???"
-                if (isPartial && possibleVerbs.Count > 0)
-                {
-                    result.Verb = possibleVerbs[0];
-                    grammar = result.Verb.Grammars[0];
-                    
-                    if (string.IsNullOrEmpty(result.Preposition))
-                    {
-                        string[] ts = grammar.Format.Split(' ');
-                        foreach (string t in ts)
-                        {
-                            if (t.IsPreposition())
-                            {
-                                result.Preposition = t;
-                                break;
-                            }
-                        }
-                    }
-
-                    if (!string.IsNullOrEmpty(result.Preposition))
-                    {
-                        //string msg = String.Format("What do you want to {0} the {1} {2}?", result.Verb.Name, result.Objects[0].Name, result.Preposition);
-                        //result.Error = msg;
-                        //result.IsAskingQuestion = true;
-                        //return result;
-                    }
-                }
-
-                result.Action = ErrorAction(L.DoNotUnderstand);
-                
-                return result;
+                result.Grammar = result.Verb.Grammars.First();
             }
+            // else ????
+
+
+
+            //if (result.Grammar == null)
+            //{
+            //    // Create action for "What do you want to <<verb>> the <<noun>> with???"
+            //    if (isPartial && possibleVerbs.Count > 0)
+            //    {
+            //        result.Verb = possibleVerbs[0];
+            //        result.Grammar = result.Verb.Grammars[0];
+                    
+            //        if (string.IsNullOrEmpty(result.Preposition))
+            //        {
+            //            string[] ts = result.Grammar.Format.Split(' ');
+            //            foreach (string t in ts)
+            //            {
+            //                if (t.IsPreposition())
+            //                {
+            //                    result.Preposition = t;
+            //                    break;
+            //                }
+            //            }
+            //        }
+
+            //        if (!string.IsNullOrEmpty(result.Preposition))
+            //        {
+            //            //string msg = String.Format("What do you want to {0} the {1} {2}?", result.Verb.Name, result.Objects[0].Name, result.Preposition);
+            //            //result.Error = msg;
+            //            //result.IsAskingQuestion = true;
+            //            //return result;
+            //        }
+            //    }
+
+            //    result.Action = ErrorAction(L.DoNotUnderstand);
+                
+            //    return result;
+            //}
             
             if (result.IsAll && result.ObjectsMustBeHeld)
             {
@@ -202,11 +217,11 @@ namespace Adventure.Net
             return result;
         }
 
-        private void FindVerb(IEnumerable<Verb> possibleVerbs, IEnumerable<string> grammars)
+        private void FindVerb(InputResult result, IEnumerable<Verb> possibleVerbs, IEnumerable<string> grammars)
         {
             foreach (var verb in possibleVerbs)
             {
-                if (FindGrammar(verb, grammars))
+                if (FindGrammar(result, verb, grammars))
                 {
                     result.Verb = verb;
                     return;
@@ -214,7 +229,7 @@ namespace Adventure.Net
             }
         }
 
-        private bool FindGrammar(Verb verb, IEnumerable<string> grammars)
+        private bool FindGrammar(InputResult result, Verb verb, IEnumerable<string> grammars)
         {
             foreach (var possibleGrammar in grammars)
             {
@@ -222,22 +237,12 @@ namespace Adventure.Net
 
                 if (matchedGrammar != null)
                 {
-                    grammar = matchedGrammar;
-                    result.ObjectsMustBeHeld = ObjectsMustBeHeld(grammar);
-                    result.Action = matchedGrammar.Action;
+                    result.Grammar = matchedGrammar;
                     return true;
                 }
             }
 
             return false;
-        }
-
-        private static bool ObjectsMustBeHeld(Grammar grammar)
-        {
-            if (grammar == null || string.IsNullOrEmpty(grammar.Format))
-                return false;
-            var tags = grammar.Format.Tags();
-            return tags.Count > 0 && (tags[0] == K.HELD_TOKEN || tags[0] == K.MULTIHELD_TOKEN);
         }
 
         private static Func<bool> ErrorAction(string error)

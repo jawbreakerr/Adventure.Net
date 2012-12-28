@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using ColossalCave.MyObjects;
 using ColossalCave.MyRooms;
 using Adventure.Net;
 using NUnit.Framework;
@@ -25,7 +26,9 @@ namespace Advent.Tests.Verbs
         [Test]
         public void dropping_object_in_room_but_not_held()
         {
-            Assert.IsFalse(Inventory.Contains("bottle"));
+            var bottle = Objects.Get<Bottle>();
+            Location.Objects.Add(bottle);
+            Assert.IsFalse(Inventory.Contains(bottle));
             IList<string> results = parser.Parse("drop bottle");
             Assert.AreEqual("The small bottle is already here.", results[0]);
         }
@@ -52,6 +55,27 @@ namespace Advent.Tests.Verbs
             Assert.AreEqual("tasty food: Dropped.", results[1]);
             Assert.AreEqual("brass lantern: Dropped.", results[2]);
             Assert.AreEqual("small bottle: Dropped.", results[3]);
+        }
+
+        [Test]
+        public void drop_all_except_object_not_specified()
+        {
+            var results = parser.Parse("drop all except");
+            Assert.AreEqual("What do you want to drop?", results[0]);
+        }
+
+        [Test]
+        public void drop_all_when_inventory_is_empty()
+        {
+            var results = parser.Parse("drop all");
+            Assert.AreEqual("What do you want to drop those things in?", results[0]);
+        }
+
+        [Test]
+        public void drop_except_all_is_invalid_order()
+        {
+            var results = parser.Parse("drop except all");
+            Assert.AreEqual("You can't see any such thing.", results[0]);
         }
 
         [Test]

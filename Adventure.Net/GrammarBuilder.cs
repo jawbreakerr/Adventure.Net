@@ -72,7 +72,7 @@ namespace Adventure.Net
 
             for (int i = 0; i < count; i++)
             {
-                List<string> elements = new List<string>();
+                var elements = new List<string>();
                 
                 for (int j = 0; j < grammarTokens.Count; j++)
                 {

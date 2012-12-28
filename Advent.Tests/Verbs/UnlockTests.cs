@@ -35,9 +35,8 @@ namespace Advent.Tests.Verbs
         {
             
             var prompt = new FakeCommandPrompt("keys");
-            //Context.CommandPrompt = prompt;
-            StringWriter output = prompt.FakeOutput;
-
+            Context.CommandPrompt = prompt;
+            
             Location = Rooms.Get<InsideBuilding>();
             parser.Parse("take all");
 
@@ -68,23 +67,6 @@ namespace Advent.Tests.Verbs
             Assert.IsFalse(grate.IsLocked);
         }
 
-        [Test]
-        public void should_handle_object_not_specified()
-        {
-            // need more than 1 object in inventory
-            var keys = Objects.GetByName("keys");
-            var lamp = Objects.GetByName("lamp");
-
-            Inventory.Add(keys);
-            Inventory.Add(lamp);
-
-            Location = Rooms.Get<OutsideGrate>();
-
-            var results = parser.Parse("unlock grate");
-
-            Assert.AreEqual("What would you like to unlock the steel grate with?", results[0]);
-
-
-        }
+        
     }
 }
