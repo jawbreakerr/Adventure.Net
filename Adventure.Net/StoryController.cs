@@ -26,7 +26,7 @@ namespace Adventure.Net
 
         public void Run()
         {
-            Library L = new Library();
+            var L = new Library();
             
             Context.Story.Initialize();
             L.Banner();

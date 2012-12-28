@@ -83,14 +83,18 @@
     <Compile Include="GreenCape.cs" />
     <Compile Include="ListOfStringExtensions.cs" />
     <Compile Include="ObjectTests\BrassLanternTests.cs" />
+    <Compile Include="ObjectTests\DragonTests.cs" />
     <Compile Include="ObjectTests\LittleBirdTests.cs" />
     <Compile Include="ObjectTests\MingVaseTests.cs" />
     <Compile Include="ObjectTests\OilTests.cs" />
+    <Compile Include="ObjectTests\SnakeTests.cs" />
     <Compile Include="ObjectTests\WickerCageTests.cs" />
     <Compile Include="AdventTestFixture.cs" />
+    <Compile Include="Oven.cs" />
     <Compile Include="RedCape.cs" />
     <Compile Include="StreamTests.cs" />
     <Compile Include="UserInputTests.cs" />
+    <Compile Include="Verbs\AskTests.cs" />
     <Compile Include="Verbs\CatchTests.cs" />
     <Compile Include="Verbs\CloseTests.cs" />
     <Compile Include="Verbs\DirectionTests.cs" />
@@ -98,6 +102,7 @@
     <Compile Include="Verbs\DropTests.cs" />
     <Compile Include="Verbs\EatTests.cs" />
     <Compile Include="Verbs\EmptyTests.cs" />
+    <Compile Include="Verbs\RemoveTests.cs" />
     <Compile Include="Verbs\SwitchTests.cs" />
     <Compile Include="Verbs\TakeTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

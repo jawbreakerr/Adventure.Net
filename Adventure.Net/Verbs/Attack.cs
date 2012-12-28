@@ -6,7 +6,7 @@
         {
             Name = "attack";
             Synonyms.Are("break, crack, destroy, fight, hit, kill, murder, punch, smash, thump, torture, wreck");
-            Grammars.Add("<noun>", AttackObject);
+            Grammars.Add(K.NOUN_TOKEN, AttackObject);
         }
 
         private bool AttackObject()

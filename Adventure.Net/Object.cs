@@ -51,17 +51,10 @@ namespace Adventure.Net
         public bool IsTransparent { get; set; }
 
         
-       // public Room Location { get; set; }
         public string Name { get; set; }
         public Object Parent { get; set; }
         public Synonyms Synonyms { get; set; }
         
-        //public void FoundIn<T>() where T:Room
-        //{
-        //    Room room = Rooms.Get<T>();
-        //    room.Objects.Add(this);
-        //}
-
         public abstract void Initialize();
 
         public Func<string> Describe { get; set; }
@@ -73,7 +66,7 @@ namespace Adventure.Net
 
         public Func<bool> Before<T>() where T : Verb
         {
-            Type verbType = typeof (T);
+            var verbType = typeof (T);
             return Before(verbType);
         }
 
@@ -145,9 +138,9 @@ namespace Adventure.Net
 
         protected void Execute(string input)
         {
-            UserInput userInput = new UserInput();
+            var userInput = new UserInput();
             var inputResult = userInput.Parse(input);
-            CommandBuilder builder = new CommandBuilder(inputResult);
+            var builder = new CommandBuilder(inputResult);
             var commands = builder.Build();
 
             foreach (var command in commands)
@@ -191,13 +184,18 @@ namespace Adventure.Net
         {
             if (InInventory)
                 Inventory.Remove(this);
-            if (this.InScope)
+            if (InScope)
                 Context.Story.Location.Objects.Remove(this);
         }
 
         public bool AtLocation
         {
             get { return Context.Story.Location.Objects.Contains(this); }
+        }
+
+        public bool IsContainer
+        {
+            get { return (this as Container != null);  }
         }
 
         public void MoveToLocation()

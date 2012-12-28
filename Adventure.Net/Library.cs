@@ -260,9 +260,10 @@ namespace Adventure.Net
             result.Add(Location);
 
             var contained = new List<Object>();
-            foreach(var obj in result.Where(x => x.IsOpen))
+            
+            foreach(var obj in result)
             {
-                Container container = obj as Container;
+                var container = obj as Container;
                 if (container != null)
                 {
                     contained.AddRange(container.Contents);

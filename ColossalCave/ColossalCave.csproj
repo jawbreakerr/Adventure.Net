@@ -70,6 +70,7 @@
     <Compile Include="MyObjects\BrassLantern.cs" />
     <Compile Include="MyObjects\Cobbles.cs" />
     <Compile Include="MyObjects\Debris.cs" />
+    <Compile Include="MyObjects\Dragon.cs" />
     <Compile Include="MyObjects\Forest.cs" />
     <Compile Include="MyObjects\FreshBatteries.cs" />
     <Compile Include="MyObjects\LargeGoldNugget.cs" />
@@ -83,6 +84,7 @@
     <Compile Include="MyObjects\Scenic.cs" />
     <Compile Include="MyObjects\Shards.cs" />
     <Compile Include="MyObjects\SmallPit.cs" />
+    <Compile Include="MyObjects\Snake.cs" />
     <Compile Include="MyObjects\Streambed.cs" />
     <Compile Include="MyObjects\VelvetPillow.cs" />
     <Compile Include="MyObjects\VendingMachine.cs" />

@@ -1,7 +1,6 @@
-﻿using System;
-using Adventure.Net;
+﻿using Adventure.Net;
 using Adventure.Net.Verbs;
-using Object = Adventure.Net.Object;
+//using Object = Adventure.Net.Object;
 
 namespace ColossalCave.MyObjects
 {
@@ -13,23 +12,148 @@ namespace ColossalCave.MyObjects
             Synonyms.Are("cheerful", "mournful", "little", "bird");
             IsAnimate = true;
 
+            Before<Examine>(() =>
+            {
+                var cage = Objects.Get<WickerCage>();
+                var bird = Objects.Get<LittleBird>();
+
+                if (cage.Contents.Contains(bird))
+                {
+                    Print("The little bird looks unhappy in the cage.");
+                }
+                else
+                {
+                    Print("The cheerful little bird is sitting here singing.");
+                }
+                
+                return true;
+
+            });
+
             Before<Release>(() =>
+            {
+                var cage = Objects.Get<WickerCage>();
+                var bird = Objects.Get<LittleBird>();
+
+                if (cage.InInventory && cage.Contents.Contains(bird))
+                {
+                    Print("(The bird is released from the cage.)");
+                }
+                else
+                {
+                    Print("The bird is not caged now.");
+                    return true;
+                }
+
+                if (cage.InInventory)
+                {
+                    cage.IsOpen = true;
+                    cage.Remove(bird);
+                    bird.MoveToLocation();
+
+                    var snake = Objects.Get<Snake>();
+
+                    if (snake.AtLocation)
+                    {
+                        Print("The little bird attacks the green snake,");
+                        Print("and in an astounding flurry drives the snake away.");
+                        Location.Objects.Remove(snake);
+                        return true;
+                    }
+
+                    var dragon = Objects.Get<Dragon>();
+                    
+                    if (dragon.AtLocation)
+                    {
+                        Print("The little bird attacks the green dragon,");
+                        Print("and in an astounding flurry gets burnt to a cinder.");
+                        Print("The ashes blow away.");
+                        bird.Remove();
+                        return true;
+                    }
+
+                    Print("The little bird flies free.");
+                    return true;
+                }
+
+                return false;
+            });
+
+            Before<Drop>(Before<Release>());
+            Before<Remove>(Before<Release>());
+
+            Before<Take>(() =>
+            {
+
+                var cage = Objects.Get<WickerCage>();
+                var bird = Objects.Get<LittleBird>();
+                var blackRod = Objects.Get<BlackRod>();
+
+                if (blackRod.InInventory)
+                {
+                    Print("The bird was unafraid when you entered,");
+                    Print("but as you approach it becomes disturbed and you cannot catch it.");
+                    return true;
+                }
+
+                if (cage.InInventory)
+                {
+                    if (cage.Contents.Contains(bird))
+                    {
+                        Print("You already have the little bird.");
+                        Print("If you take it out of the cage it will likely fly away from you.");
+                        return true;
+                    }
+                    
+                    Print("You catch the bird in the wicker cage.");
+                    cage.IsOpen = false;
+                    Location.Objects.Remove(bird);
+                    cage.Add(bird);
+                    return true;
+                }
+                
+                Print("You can catch the bird, but you cannot carry it.");
+                return true;
+
+            });
+
+            Before<Catch>(Before<Take>());
+
+            Before<Insert>(() =>
+                {
+                    var cage = Objects.Get<WickerCage>();
+                    var second = Context.IndirectObject;
+                    if (second != null && second.IsContainer && second != cage)
+                    {
+                        Print("Don't put the poor bird in {0} {1}!", second.Article, second.Name);
+                        return true;
+                    }
+                    
+                    //Execute("take bird");
+                    var beforeTake = Before<Take>();
+                    return beforeTake(); 
+                });
+
+            Before<Attack>(() =>
                 {
                     var cage = Objects.Get<WickerCage>();
                     var bird = Objects.Get<LittleBird>();
 
-                    if (!cage.Contents.Contains(bird))
+                    if (cage.Contents.Contains(bird))
                     {
-                        Print("The bird is not caged now.");
+                        Print("Oh, leave the poor unhappy bird alone.");
                         return true;
                     }
-                    else
-                    {
-                        cage.IsOpen = true;
-                        cage.Remove(bird);
-                        bird.MoveToLocation();
-                        return false;
-                    }
+
+                    Print("The little bird is now dead. Its body disappears.");
+                    bird.Remove();
+                    return true;
+                });
+
+            Before<Ask>(() =>
+                {
+                    Print("Cheep! Chirp!");
+                    return true;
                 });
         }
     }
@@ -38,32 +162,12 @@ namespace ColossalCave.MyObjects
 //with  name 'cheerful' 'mournful' 'little' 'bird',
 //    initial "A cheerful little bird is sitting here singing.",
 //    before [;
-//      Examine:
-//        if (self in wicker_cage)
-//            "The little bird looks unhappy in the cage.";
-//        "The cheerful little bird is sitting here singing.";
+//      
 //      Insert:
 //        if (second == wicker_cage)
 //            <<Catch self>>;
 //        else
 //            "Don't put the poor bird in ", (the) second, "!";
-//      Drop, Remove:
-//        if (self in wicker_cage) {
-//            print "(The bird is released from the cage.)^^";
-//            <<Release self>>;
-//        }
-//      Take, Catch:
-//        if (self in wicker_cage)
-//            "You already have the little bird.
-//             If you take it out of the cage it will likely fly away from you.";
-//        if (wicker_cage notin player)
-//            "You can catch the bird, but you cannot carry it.";
-//        if (black_rod in player)
-//            "The bird was unafraid when you entered,
-//             but as you approach it becomes disturbed and you cannot catch it.";
-//        move self to wicker_cage;
-//        give wicker_cage ~open;
-//        "You catch the bird in the wicker cage.";
 //      Release:
 //        if (self notin wicker_cage)
 //            "The bird is not caged now.";

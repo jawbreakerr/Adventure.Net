@@ -5,9 +5,25 @@ using Adventure.Net.Verbs;
 
 namespace Adventure.Net
 {
+    public class ParserResult
+    {
+        public List<string> BeforeMessages { get; private set; }
+        public List<string> DuringMessages { get; private set; }
+        public List<string> AfterMessages { get; private set; }
+
+        public ParserResult()
+        {
+            BeforeMessages = new List<string>();
+            DuringMessages = new List<string>();
+            AfterMessages = new List<string>();
+        }
+    }
+
     public class Parser : IParser
     {
-        private List<string> parserResults;
+        //private List<string> parserResults;
+        private List<ParserResult> results;
+        
         private State currentState;
 
         private enum State
@@ -17,10 +33,6 @@ namespace Adventure.Net
             After
         }
         
-        private List<string> beforeMessages;
-        private List<string> duringMessages;
-        private List<string> afterMessages;
-
         private InputResult inputResult;
         private Object objectInPlay;
 
@@ -53,10 +65,10 @@ namespace Adventure.Net
         private IList<string> GetMessageList()
         {
             if (currentState == State.Before)
-                return beforeMessages;
+                return results.Last().BeforeMessages;
             if (currentState == State.After)
-                return afterMessages;
-            return duringMessages;
+                return results.Last().AfterMessages;
+            return results.Last().DuringMessages;
         }
 
         public IList<string> Parse(string input)
@@ -64,15 +76,15 @@ namespace Adventure.Net
             return Parse(input, true);
         }
 
-        public IList<String> Parse(string input, bool showOutput)
+        private IList<String> Parse(string input, bool showOutput)
         {
             Context.Parser = this;
             Context.Object = null;
             Context.IndirectObject = null;
             
-            parserResults = new List<string>();
+            results = new List<ParserResult>();
 
-            Library L = new Library();
+            var L = new Library();
             bool wasLit = L.IsLit();
 
             var userInput = new UserInput();
@@ -101,14 +113,6 @@ namespace Adventure.Net
 
             inputResult = userInput.Parse(input);
 
-            //if (inputResult.HasError)
-            //{
-            //    parserResults.Add(inputResult.Error);
-            //}
-            //else
-            //{
-            //    HandleInputResult();
-            //}
             HandleInputResult();
 
             if (!wasLit && L.IsLit())
@@ -119,24 +123,40 @@ namespace Adventure.Net
 
         private IList<string> GetResults(bool showOutput)
         {
-            var results = new List<string>();
+            var list = new List<string>();
 
-            foreach (string value in parserResults.Where(x => !String.IsNullOrEmpty(x)).Distinct())
-            {
-                string[] lines = value.Split('\n');
-
-                foreach (string line in lines)
+            Action<string> print = (msg) =>
                 {
-                    results.Add(line);
-                    if (showOutput)
+                    string[] lines = msg.Split('\n');
+                    foreach (var line in lines)
                     {
-                        Context.Output.Print(line);
+                        list.Add(line);
+                        if (showOutput)
+                        {
+                            Context.Output.Print(line);
+                        }
                     }
+                };
+
+            foreach (var result in results)
+            {
+                foreach (var msg in result.BeforeMessages)
+                {
+                    print(msg);
                 }
 
+                foreach (var msg in result.DuringMessages)
+                {
+                    print(msg);
+                }
+
+                foreach (var msg in result.AfterMessages)
+                {
+                    print(msg);
+                }
             }
 
-            return results;
+            return list;
         }
 
         private void HandleInputResult()
@@ -156,9 +176,8 @@ namespace Adventure.Net
             Context.Object = command.Object;
             Context.IndirectObject = command.IndirectObject;
 
-            beforeMessages = new List<string>();
-            duringMessages = new List<string>();
-            afterMessages = new List<string>();
+            var parserResult = new ParserResult();
+            results.Add(parserResult);
 
             // after, before, and during needs to be modified to return the object
             // that handled the message
@@ -170,24 +189,8 @@ namespace Adventure.Net
                 result = During(command);
                 if (result)
                 {
-                    if (After(command))
-                    {
-                        parserResults.AddRange(afterMessages);
-                    }
-                    else
-                    {
-                        parserResults.AddRange(afterMessages);
-                        parserResults.AddRange(duringMessages);
-                    }
+                    After(command);
                 }
-                else
-                {
-                    parserResults.AddRange(duringMessages);
-                }
-            }
-            else
-            {
-                parserResults.AddRange(beforeMessages);
             }
 
             return result;
@@ -204,7 +207,7 @@ namespace Adventure.Net
             if (obj != null)
             {
                 objectInPlay = obj;
-                Func<bool> before = obj.Before(command.Verb.GetType());
+                var before = obj.Before(command.Verb.GetType());
                 if (before != null)
                 {
                     return before();
@@ -232,7 +235,7 @@ namespace Adventure.Net
             if (obj != null)
             {
                 objectInPlay = obj;
-                Func<bool> after = obj.After(command.Verb.GetType());
+                var after = obj.After(command.Verb.GetType());
                 if (after != null)
                 {
                     return after();

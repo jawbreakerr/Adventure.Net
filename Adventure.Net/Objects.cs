@@ -35,7 +35,7 @@ namespace Adventure.Net
 
         public static Object GetByName(string name)
         {
-            return objects.Where(x => x.Name == name || x.Synonyms.Contains(name)).SingleOrDefault();
+            return objects.SingleOrDefault(x => x.Name == name || x.Synonyms.Contains(name));
         }
 
         public static IList<Object> WithName(string name)

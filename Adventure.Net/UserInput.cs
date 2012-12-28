@@ -101,22 +101,19 @@ namespace Adventure.Net
                             result.Action = ErrorAction(partial);
                             return result;
                         }
-                        else
-                        {
-                            result.Action = ErrorAction(L.CantSeeObject);
-                            return result;
-                        }
+                        
+                        result.Action = ErrorAction(L.CantSeeObject);
+                        return result;
                     }
                 }
                 else
                 {
-                    // need to implement "Which do you mean, the red cape or the black cape?" type behavior
-                    // here
+                    // need to implement "Which do you mean, the red cape or the black cape?" type behavior here
                     Object obj = null;
-                    var ofInterest = objects.Where(x => x.InScope);
-                    if (ofInterest.Count() > 1)
+                    var ofInterest = objects.Where(x => x.InScope).ToList();
+                    if (ofInterest.Count > 1)
                     {
-                        obj = ofInterest.Where(x => x.InInventory).FirstOrDefault();
+                        obj = ofInterest.FirstOrDefault(x => x.InInventory);
                     }
                     else
                     {
@@ -131,7 +128,8 @@ namespace Adventure.Net
                         result.Action = ErrorAction(L.CantSeeObject);
                         return result;
                     }
-                    else if (isIndirectObject)
+                    
+                    if (isIndirectObject)
                     {
                         grammarTokens.Add(K.INDIRECT_OBJECT_TOKEN);
                         result.IndirectObject = obj;
@@ -148,7 +146,7 @@ namespace Adventure.Net
                         if (!result.Objects.Contains(obj))
                             result.Objects.Add(obj);
                         isPartial = true;
-                    }    
+                    }
                 }
 
                
@@ -220,7 +218,7 @@ namespace Adventure.Net
         {
             foreach (var possibleGrammar in grammars)
             {
-                Grammar matchedGrammar = verb.Grammars.Where(x => x.Format == possibleGrammar).FirstOrDefault();
+                var matchedGrammar = verb.Grammars.FirstOrDefault(x => x.Format == possibleGrammar);
 
                 if (matchedGrammar != null)
                 {

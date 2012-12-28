@@ -10,6 +10,7 @@
         public const string HELD_TOKEN = "<held>";
         public const string MULTI_TOKEN = "<multi>";
         public const string MULTIHELD_TOKEN = "<multiheld>";
+        public const string TOPIC_TOKEN = "<topic>";
 
     }
 }

@@ -15,7 +15,7 @@ namespace Adventure.Net
         {
             bool result = false;
             var verb = new T();
-            var g = verb.Grammars.Where(x => x.Format == format).SingleOrDefault();
+            var g = verb.Grammars.SingleOrDefault(x => x.Format == format);
 
             if (g != null)
             {

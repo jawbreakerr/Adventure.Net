@@ -21,9 +21,13 @@ namespace Adventure.Net
                         continue;
 
                     if (ReplacedWords.Contains(token))
+                    {
                         result.Add(ReplacedWords.ReplacementFor(token));
+                    }
                     else
+                    {
                         result.Add(token);
+                    }
                 }    
             }
            

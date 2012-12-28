@@ -8,7 +8,7 @@ namespace Adventure.Net.Verbs
         public Put()
         {
             Name = "put";
-            Grammars.Add("<multiheld> [in,inside,into] <noun>", InsertObject);
+            Grammars.Add("<multi> [in,inside,into] <noun>", InsertObject);
             Grammars.Add("<multiheld> [on,onto] <noun>", PutOnObject);
             Grammars.Add("on <held>", WearObject);
             Grammars.Add("down <multiheld>", DropObject);
@@ -17,7 +17,7 @@ namespace Adventure.Net.Verbs
 
         private bool InsertObject()
         {
-            return RedirectTo<Insert>("<multiheld> in <noun>");
+            return RedirectTo<Insert>("<multi> in <noun>");
         }
         
         private bool PutOnObject()

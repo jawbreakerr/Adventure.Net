@@ -20,7 +20,7 @@ namespace Adventure.Net.Verbs
 
         private bool TakeSingle()
         {
-            return RedirectTo<Take>("<multi>");
+            return RedirectTo<Take>(K.MULTI_TOKEN);
         }
     }
 }

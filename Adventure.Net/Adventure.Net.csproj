@@ -117,10 +117,12 @@
     <Compile Include="UserInput.cs" />
     <Compile Include="Verb.cs" />
     <Compile Include="VerbList.cs" />
+    <Compile Include="Verbs\Ask.cs" />
     <Compile Include="Verbs\Attack.cs" />
     <Compile Include="Verbs\Catch.cs" />
     <Compile Include="Verbs\Close.cs" />
     <Compile Include="Verbs\Count.cs" />
+    <Compile Include="Verbs\Disrobe.cs" />
     <Compile Include="Verbs\Down.cs" />
     <Compile Include="Verbs\Drink.cs" />
     <Compile Include="Verbs\Drop.cs" />
@@ -148,6 +150,7 @@
     <Compile Include="Verbs\Quit.cs" />
     <Compile Include="Verbs\Receive.cs" />
     <Compile Include="Verbs\Release.cs" />
+    <Compile Include="Verbs\Remove.cs" />
     <Compile Include="Verbs\Rub.cs" />
     <Compile Include="Verbs\South.cs" />
     <Compile Include="Verbs\Southeast.cs" />

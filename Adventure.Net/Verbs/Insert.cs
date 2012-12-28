@@ -8,25 +8,25 @@ namespace Adventure.Net.Verbs
         public Insert()
         {
             Name = "insert";
-            Grammars.Add("<multiheld> [in,into] <noun>", InsertObject);
+            Grammars.Add("<multi> [in,into] <noun>", InsertObject);
         }
 
         private bool InsertObject()
         {
 
-            if (!Inventory.Contains(Object))
+            if (Object.InInventory)
             {
                 Print(String.Format("You need to be holding the {0} before you can put it into something else.", Object.Name));
                 return true;
             }
 
-            Func<bool> beforeReceive = IndirectObject.Before<Receive>();
+            var beforeReceive = IndirectObject.Before<Receive>();
             if (beforeReceive != null)
             {
                 return beforeReceive();
             }
 
-            Container c = IndirectObject as Container;
+            var c = IndirectObject as Container;
             if (c == null)
             {
                 Print("That can't contain things.");
@@ -42,7 +42,7 @@ namespace Adventure.Net.Verbs
             Inventory.Remove(Object);
             c.Add(Object);
 
-            Func<bool> afterReceive = IndirectObject.After<Receive>();
+            var afterReceive = IndirectObject.After<Receive>();
             if (afterReceive != null)
             {
                 return afterReceive();
