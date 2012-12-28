@@ -16,20 +16,23 @@ namespace Adventure.Net
         public IList<Command> Build()
         {
             var result = new List<Command>();
+            if (inputResult == null)
+                return result;
 
             if (inputResult.Objects.Count == 0)
             {
                 // Single Action = "North"
                 // IsAll = some command where all was specified (e.g. drop all)
-                if (inputResult.IsSingleAction || inputResult.IsAll)
-                {
+                //if (inputResult.IsSingleAction || inputResult.IsAll)
+                //{
                     result.Add(GetCommand(null));
-                }
-                else if (!inputResult.IsAll)
-                {
-                    throw new Exception("Implement objectnotspecifed!!!!");
-                }
+                //}
+                //else if (!inputResult.IsAll)
+                //{
+                //    throw new Exception("Implement objectnotspecifed!!!!");
+                //}
             }
+            
             //else if (inputResult.Objects.Count == 1)
             //{
             //    var obj = inputResult.Objects[0];

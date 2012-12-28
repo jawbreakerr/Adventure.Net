@@ -12,6 +12,7 @@ namespace Adventure.Net
         {
             CantSeeObject = "You can't see any such thing.";
             DoNotUnderstand = "I beg your pardon?";
+            DidntUnderstandSentence = "I didn't understand that sentence.";
             VerbNotRecognized = "That's not a verb I recognize.";
         }
 
@@ -53,6 +54,7 @@ namespace Adventure.Net
         }
 
         public string DoNotUnderstand { get; set;}
+        public string DidntUnderstandSentence { get; set;}
         public string CantSeeObject { get; set; }
         public string VerbNotRecognized { get; set; }
 
@@ -250,7 +252,7 @@ namespace Adventure.Net
             return objects.FirstOrDefault();
         }
 
-        public IList<Object> ObjectsInScope()
+        public List<Object> ObjectsInScope()
         {
             var result = new List<Object>();
             

@@ -22,7 +22,13 @@ namespace Adventure.Net.Verbs
         
         private bool PutOnObject()
         {
-            throw new Exception("This is not implemented!!!!!");
+            if (!Object.InInventory)
+            {
+                Print("You need to be holding {0} {1} before you can put it on top of something else.", Object.Article, Object.Name);
+                return true;
+            }
+
+            throw new Exception("Not implemented");
         }
 
         private bool WearObject()

@@ -80,6 +80,7 @@
     <Compile Include="BlackCape.cs" />
     <Compile Include="FakeCommandPrompt.cs" />
     <Compile Include="GrammarBuilderTests.cs" />
+    <Compile Include="GrammarsTests.cs" />
     <Compile Include="GreenCape.cs" />
     <Compile Include="ListOfStringExtensions.cs" />
     <Compile Include="ObjectTests\BrassLanternTests.cs" />

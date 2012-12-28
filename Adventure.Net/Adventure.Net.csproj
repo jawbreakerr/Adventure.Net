@@ -74,6 +74,7 @@
     <Compile Include="Command.cs" />
     <Compile Include="CommandBuilder.cs" />
     <Compile Include="CommandInfo.cs" />
+    <Compile Include="IncompleteInput.cs" />
     <Compile Include="InputResult.cs" />
     <Compile Include="K.cs" />
     <Compile Include="GrammarBuilder.cs" />

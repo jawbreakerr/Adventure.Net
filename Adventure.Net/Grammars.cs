@@ -13,7 +13,7 @@ namespace Adventure.Net
             }
             else
             {
-                Add(new Grammar() { Format = format, Action = action });
+                Add(new Grammar(format) { Action = action });
             }
         }
 
@@ -30,7 +30,8 @@ namespace Adventure.Net
 
                 foreach (string word in words)
                 {
-                    Add(new Grammar() { Format = format.Replace(pattern, word), Action = action });
+                    var single = format.Replace(pattern, word);
+                    Add(new Grammar(single) { Action = action });
                 }
             }
         }

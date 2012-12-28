@@ -7,15 +7,16 @@ namespace Advent.Tests
     public class GrammarsTests
     {
         [Test]
-        public void METHOD_NAME()
+        public void preposition_gets_set()
         {
             var grammars = new Grammars
                 {
                     {"<multi> [in,inside,into] <noun>", () => true}
                 };
 
-            var grammar = grammars.First();
-
+            var grammar = grammars.Single(x => x.Preposition == "in");
+            grammar = grammars.Single(x => x.Preposition == "inside");
+            grammar = grammars.Single(x => x.Preposition == "into");
         } 
     }
 }

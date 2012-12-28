@@ -11,6 +11,16 @@ namespace Adventure.Net
             return tokens.Where(x => x.IsTag()).ToList();
         }
 
+        public static string F(this string input, params object[] args)
+        {
+            return string.Format(input, args);
+        }
+
+        public static bool HasValue(this string input)
+        {
+            return !string.IsNullOrEmpty(input) && !string.IsNullOrWhiteSpace(input);
+        }
+
         public static bool In(this string input, IList<string> values)
         {
             return (values.Contains(input));

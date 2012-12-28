@@ -80,7 +80,12 @@ namespace Advent.Tests.Verbs
             Object food = Objects.Get<TastyFood>();
             Object lamp = Objects.Get<BrassLantern>();
 
-            IList<string> results = parser.Parse("take all");
+            Location.Objects.Add(bottle);
+            Location.Objects.Add(keys);
+            Location.Objects.Add(food);
+            Location.Objects.Add(lamp);
+
+            var results = parser.Parse("take all");
 
             Assert.IsTrue(Inventory.Contains(bottle, keys, lamp, food));
 
@@ -117,12 +122,27 @@ namespace Advent.Tests.Verbs
             Location.Objects.Remove(bottle);
             Inventory.Add(bottle);
 
-            IList<string> results = parser.Parse("take bottle");
+            var results = parser.Parse("take bottle");
             
             Assert.AreEqual(1, results.Count);
             Assert.AreEqual("You already have that.", results[0]);
 
         }
-        
+
+        [Test]
+        public void take_except()
+        {
+            var results = parser.Parse("take except");
+            Assert.AreEqual(L.CantSeeObject, results[0]);
+            
+        }
+
+        [Test]
+        public void take_bottle_lantern_food_except_bottle()
+        {
+            var results = parser.Parse("take bottle lantern food except bottle");
+            Assert.IsTrue(results.Contains("tasty food: Taken."));
+            Assert.IsTrue(results.Contains("brass lantern: Taken."));
+        }
     }
 }

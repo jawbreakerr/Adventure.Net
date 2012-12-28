@@ -21,7 +21,6 @@ namespace Adventure.Net
 
     public class Parser : IParser
     {
-        //private List<string> parserResults;
         private List<ParserResult> results;
         
         private State currentState;
@@ -113,17 +112,24 @@ namespace Adventure.Net
 
             inputResult = userInput.Parse(input);
 
-            HandleInputResult();
+            if (!inputResult.Handled)
+            {
+                HandleInputResult();
+            }
 
             if (!wasLit && L.IsLit())
                 L.Look(true);
 
-            return GetResults(showOutput);
+            return GetResults(showOutput, inputResult.ParserResults);
         }
 
-        private IList<string> GetResults(bool showOutput)
+        private IList<string> GetResults(bool showOutput, IList<string> additionalResults = null)
         {
             var list = new List<string>();
+            if (additionalResults != null)
+            {
+                list.AddRange(additionalResults);
+            }
 
             Action<string> print = (msg) =>
                 {

@@ -9,13 +9,17 @@ namespace Adventure.Net
     {
         public List<Object> Objects { get; set; }
         public Object IndirectObject { get; set; }
-        public IList<Object> Exceptions { get; private set; }
+        public List<Object> Exceptions { get; private set; }
         public string Pregrammar { get; set; }
         public bool IsAll { get; set; }
         public string Preposition { get; set; }
         public bool IsAskingQuestion { get; set; }
         public bool IsPartial { get; set; }
+        public bool Handled { get; set; }
 
+        // contains parser results for recursive calls
+        public List<string> ParserResults { get; set; }
+ 
         private Verb _verb;
         private Grammar _grammar;
 
@@ -24,6 +28,7 @@ namespace Adventure.Net
             Objects = new List<Object>();
             Exceptions = new List<Object>();
             Verb = new NullVerb();
+            ParserResults = new List<string>();
         }
 
         public Verb Verb
@@ -57,7 +62,13 @@ namespace Adventure.Net
                     ObjectsMustBeHeld = tags.Count > 0 && (tags[0] == K.HELD_TOKEN || tags[0] == K.MULTIHELD_TOKEN);    
                 }
 
-                if (_grammar != null) Action = _grammar.Action;
+                if (_grammar != null)
+                {
+                    Action = _grammar.Action;
+                    Preposition = _grammar.Preposition;
+                }
+
+                
             }
         }
 

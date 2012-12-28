@@ -89,13 +89,17 @@ namespace Adventure.Net
                     }
                     else if (token == K.ALL)
                     {
-                        result.Objects.AddRange(L.ObjectsInScope());
+                       // result.Objects.AddRange(L.ObjectsInScope());
                         grammarTokens.Add(token);
                         result.IsAll = true;
                     }
                     else if (token == K.EXCEPT)
                     {
-                       // isException = true;
+                        if (!result.IsAll && !result.Objects.Any())
+                        {
+                            result.Action = ErrorAction(L.CantSeeObject);
+                            return result;
+                        }
                         result.IsExcept = true;
                     }
                     else
@@ -141,7 +145,7 @@ namespace Adventure.Net
                     }
                     else if (result.IsExcept)
                     {
-                        result.Objects.Remove(obj);
+                        //result.Objects.Remove(obj);
                         result.Exceptions.Add(obj);
                     }
                     else
@@ -164,54 +168,27 @@ namespace Adventure.Net
 
             FindVerb(result, possibleVerbs, grammars);
 
-            // Here we need to handle incompletes
-
             if (result.Grammar == null)
             {
-                result.Grammar = result.Verb.Grammars.First();
+                var incomplete = new IncompleteInput();
+                incomplete.Handle(result);
             }
-            // else ????
-
-
-
-            //if (result.Grammar == null)
-            //{
-            //    // Create action for "What do you want to <<verb>> the <<noun>> with???"
-            //    if (isPartial && possibleVerbs.Count > 0)
-            //    {
-            //        result.Verb = possibleVerbs[0];
-            //        result.Grammar = result.Verb.Grammars[0];
-                    
-            //        if (string.IsNullOrEmpty(result.Preposition))
-            //        {
-            //            string[] ts = result.Grammar.Format.Split(' ');
-            //            foreach (string t in ts)
-            //            {
-            //                if (t.IsPreposition())
-            //                {
-            //                    result.Preposition = t;
-            //                    break;
-            //                }
-            //            }
-            //        }
-
-            //        if (!string.IsNullOrEmpty(result.Preposition))
-            //        {
-            //            //string msg = String.Format("What do you want to {0} the {1} {2}?", result.Verb.Name, result.Objects[0].Name, result.Preposition);
-            //            //result.Error = msg;
-            //            //result.IsAskingQuestion = true;
-            //            //return result;
-            //        }
-            //    }
-
-            //    result.Action = ErrorAction(L.DoNotUnderstand);
-                
-            //    return result;
-            //}
             
-            if (result.IsAll && result.ObjectsMustBeHeld)
+            if (result.IsAll)
             {
-                result.Objects = result.Objects.Where(x => x.InInventory).ToList();   
+                if (result.ObjectsMustBeHeld)
+                {
+                    result.Objects = result.Objects.Where(x => x.InInventory).ToList();
+                }
+                else
+                {
+                    result.Objects = L.ObjectsInScope();
+                }
+            }
+
+            if (result.IsExcept)
+            {
+                result.Exceptions.ForEach(x => result.Objects.Remove(x));
             }
 
             return result;
@@ -245,7 +222,7 @@ namespace Adventure.Net
             return false;
         }
 
-        private static Func<bool> ErrorAction(string error)
+        public static Func<bool> ErrorAction(string error)
         {
             return () =>
                 {
