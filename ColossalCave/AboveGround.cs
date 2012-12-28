@@ -6,6 +6,7 @@
         {
             HasLight = true;
             NoDwarf = true;
+            IsStatic = true;
         }
 
         

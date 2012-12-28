@@ -7,8 +7,8 @@
             Name = "go";
             Synonyms.Are("g", "walk", "run");
             Grammars.Add(Grammar.Empty,VagueGo);
-            Grammars.Add("<direction>", ()=> false);
-            Grammars.Add("<noun>", EnterIt);
+            Grammars.Add(K.DIRECTION_TOKEN, ()=> false);
+            Grammars.Add(K.NOUN_TOKEN, EnterIt);
         }
 
         private bool VagueGo()
@@ -19,7 +19,7 @@
 
         private bool EnterIt()
         {
-            return RedirectTo<Enter>("<noun>");
+            return RedirectTo<Enter>(K.NOUN_TOKEN);
         }
         
 

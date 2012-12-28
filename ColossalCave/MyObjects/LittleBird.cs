@@ -35,11 +35,7 @@ namespace ColossalCave.MyObjects
                 var cage = Objects.Get<WickerCage>();
                 var bird = Objects.Get<LittleBird>();
 
-                if (cage.InInventory && cage.Contents.Contains(bird))
-                {
-                    Print("(The bird is released from the cage.)");
-                }
-                else
+                if (!cage.Contents.Contains(bird))
                 {
                     Print("The bird is not caged now.");
                     return true;
@@ -79,8 +75,20 @@ namespace ColossalCave.MyObjects
                 return false;
             });
 
-            Before<Drop>(Before<Release>());
-            Before<Remove>(Before<Release>());
+            Before<Drop>(() =>
+                {
+                    var cage = Objects.Get<WickerCage>();
+                    if (cage.Contains<LittleBird>())
+                    {
+                        Print("(The bird is released from the cage.)");
+                        var beforeRelease = Before<Release>();
+                        return beforeRelease();
+                    }
+
+                    return false;
+                });
+
+            Before<Remove>(Before<Drop>());
 
             Before<Take>(() =>
             {

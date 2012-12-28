@@ -46,7 +46,8 @@ namespace Advent.Tests.ObjectTests
         [Test]
         public void cannot_accept_anything_other_than_batteries()
         {
-            Inventory.Add(Objects.Get<Bottle>());
+            var bottle = Objects.Get<Bottle>();
+            Inventory.Add(bottle);
             var results = parser.Parse("put bottle in lamp");
             results.ShouldContain("The only thing you might successfully put in the lamp is a fresh pair of batteries.");
         }

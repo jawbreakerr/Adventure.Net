@@ -193,10 +193,9 @@ namespace Advent.Tests.ObjectTests
 
             var results = parser.Parse("release bird");
 
-            Assert.AreEqual(3, results.Count);
-            Assert.AreEqual("(The bird is released from the cage.)", results[0]);
-            Assert.AreEqual("The little bird attacks the green snake,", results[1]);
-            Assert.AreEqual("and in an astounding flurry drives the snake away.", results[2]);
+            Assert.AreEqual(2, results.Count);
+            Assert.AreEqual("The little bird attacks the green snake,", results[0]);
+            Assert.AreEqual("and in an astounding flurry drives the snake away.", results[1]);
             Assert.IsFalse(Location.Objects.Contains(snake));
             Assert.IsFalse(cage.Contains<LittleBird>());
             Assert.IsTrue(Location.Contains<LittleBird>());
@@ -215,10 +214,9 @@ namespace Advent.Tests.ObjectTests
             Location.Objects.Add(dragon);
 
             var results = parser.Parse("release bird");
-            Assert.AreEqual("(The bird is released from the cage.)", results[0]);
-            Assert.AreEqual("The little bird attacks the green dragon,", results[1]);
-            Assert.AreEqual("and in an astounding flurry gets burnt to a cinder.", results[2]);
-            Assert.AreEqual("The ashes blow away.", results[3]);
+            Assert.AreEqual("The little bird attacks the green dragon,", results[0]);
+            Assert.AreEqual("and in an astounding flurry gets burnt to a cinder.", results[1]);
+            Assert.AreEqual("The ashes blow away.", results[2]);
 
             Assert.IsFalse(bird.AtLocation);
             Assert.IsFalse(bird.InInventory);
@@ -304,7 +302,7 @@ namespace Advent.Tests.ObjectTests
         }
 
         [Test]
-        public void implement_life()
+        public void implement_life_give()
         {
             Assert.Fail();
         }

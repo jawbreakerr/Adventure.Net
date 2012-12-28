@@ -44,7 +44,7 @@ namespace Adventure.Net
 
         private Grammar GetGrammar(string format)
         {
-            return Verb.Grammars.Where(x => x.Format == format).SingleOrDefault();
+            return Verb.Grammars.SingleOrDefault(x => x.Format == format);
         }
     }
 

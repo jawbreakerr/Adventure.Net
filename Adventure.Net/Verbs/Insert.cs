@@ -14,11 +14,11 @@ namespace Adventure.Net.Verbs
         private bool InsertObject()
         {
 
-            if (Object.InInventory)
-            {
-                Print(String.Format("You need to be holding the {0} before you can put it into something else.", Object.Name));
-                return true;
-            }
+            //if (Object.InInventory)
+            //{
+            //    Print(String.Format("You need to be holding the {0} before you can put it into something else.", Object.Name));
+            //    return true;
+            //}
 
             var beforeReceive = IndirectObject.Before<Receive>();
             if (beforeReceive != null)

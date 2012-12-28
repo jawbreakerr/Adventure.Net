@@ -12,7 +12,7 @@ namespace Advent.Tests.Verbs
         {
             var lamp = Objects.Get<BrassLantern>();
             Inventory.Add(lamp);
-            var results = parser.Parse("turn on lamp");
+            var results = parser.Parse("switch on lamp");
             Assert.IsTrue(lamp.IsOn);
             Assert.IsTrue(results.Contains("You switch the brass lantern on."));
         }
