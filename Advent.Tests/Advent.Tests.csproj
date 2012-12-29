@@ -93,6 +93,8 @@
     <Compile Include="AdventTestFixture.cs" />
     <Compile Include="Oven.cs" />
     <Compile Include="RedCape.cs" />
+    <Compile Include="RoomTests\EndOfRoadTests.cs" />
+    <Compile Include="RoomTests\HillInRoadTests.cs" />
     <Compile Include="StreamTests.cs" />
     <Compile Include="UserInputTests.cs" />
     <Compile Include="Verbs\AskTests.cs" />

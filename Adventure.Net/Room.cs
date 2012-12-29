@@ -230,7 +230,7 @@ namespace Adventure.Net
             if (!roomMap.ContainsKey(dir))
                 return null;
 
-            Func<Room> getRoom = roomMap[dir];
+            var getRoom = roomMap[dir];
             var room = getRoom();
             if (room != null)
             {

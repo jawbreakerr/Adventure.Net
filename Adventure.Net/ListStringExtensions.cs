@@ -5,6 +5,14 @@ namespace Adventure.Net
 {
     public static class ListStringExtensions
     {
+        public static void Remove(this IList<string> input, IEnumerable<string> remove)
+        {
+            foreach (var item in remove)
+            {
+                input.Remove(item);
+            }
+        }
+
         public static bool IsEmpty(this IList<string> input)
         {
             foreach (string item in input)

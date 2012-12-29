@@ -27,7 +27,7 @@ namespace ColossalCave
                     }
                     else
                     {
-                        Random rnd = new Random();
+                        var rnd = new Random();
                         if (rnd.Next(1, 4) == 1)
                         {
                             //TODO: dead = true; ????

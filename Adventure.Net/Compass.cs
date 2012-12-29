@@ -32,6 +32,7 @@ namespace Adventure.Net
                                         "down",
                                         "in",
                                         "out",
+                                        "enter"
                                     });
         }
 

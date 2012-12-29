@@ -152,7 +152,7 @@ namespace Adventure.Net
 
         protected bool In<T>() where T:Object
         {
-            Object obj = Objects.Get<T>();
+            Object obj = Rooms.Get<T>();
             return (L.CurrentLocation == obj);
         }
 

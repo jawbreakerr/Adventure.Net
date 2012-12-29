@@ -1,10 +1,11 @@
 ﻿namespace Adventure.Net.Verbs
 {
-    public class Enter : Verb
+    public class Enter : DirectionalVerb
     {
         public Enter()
         {
             Name = "enter";
+            SetDirection(room => room.IN(), "in");
             Grammars.Add("<noun>", EnterObject);
         }
 
